@@ -1,0 +1,178 @@
+swagger: '2.0'
+info:
+  x-api-id: 9643f1e1-3eb0-4a8a-ab34-f653974ddd40
+  description: The API to manage brands and brand families. When create or update the data,
+    the data changing event will be published into Nakadi with the name `spp.brand_service.brand` and `spp.brand_service.brandfamily`.
+  version: 1.0.0
+  title: Brand Service
+  contact:
+    name: Zissou
+    email: team-zissou@zalando.ie
+externalDocs:
+  description: An overview of the brand/brand_family data management services as a whole
+  url: https://docs.google.com/a/zalando.de/document/d/11dwMXiEpIqXDMh25i_hzxH5jOXHQVC4h4u0YdAtmuyE/edit?usp=sharing
+basePath: /api
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    tokenUrl: https://identity.zalando.com/oauth2/token
+    flow: application
+    scopes:
+      spp-brand-service.brands.write: Write access
+      spp-brand-service.brands.read: Read access
+      uid: Unique identifier of the user accessing the service
+tags:
+  - name: infrastructual
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+  - application/problem+json
+
+paths:
+  /health:
+    get:
+      tags:
+        - infrastructual
+      summary: Check the health of the application
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/HealthResult'
+  /metrics:
+    get:
+      tags:
+        - infrastructual
+      summary: View the application metrics
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApplicationMetrics'
+
+definitions:
+  HealthResult:
+    type: object
+    properties:
+      is_healthy:
+        type: boolean
+        description: Defines whether the service instance is healthy or not
+        readOnly: true
+      health_check_failures:
+        type: string
+        description: Description of health check failures for an unhealthy instance
+        readOnly: true
+
+  ApplicationMetrics:
+    type: object
+    properties:
+      counters:
+        type: array
+        items:
+          $ref: '#/definitions/CounterMetric'
+        description: All the counter metrics exposed by the application
+        readOnly: true
+      gauges:
+        type: array
+        items:
+          $ref: '#/definitions/GaugeMetric'
+        description: All the gauge metrics exposed by the application
+        readOnly: true
+      timers:
+        type: array
+        items:
+          $ref: '#/definitions/TimerMetric'
+        description: All the timer metrics exposed by the application
+        readOnly: true
+
+  CounterMetric:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of the Application Counter Metric
+        readOnly: true
+      count:
+        type: integer
+        description: the current sum of the counter
+        minimum: 0
+        readOnly: true
+      tags:
+        $ref: '#/definitions/MetricTags'
+
+  GaugeMetric:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of the Application Gauge Metric
+        readOnly: true
+      value:
+        type: integer
+        description: The current value of the gauge
+        minimum: 0
+        readOnly: true
+      tags:
+        $ref: '#/definitions/MetricTags'
+
+  TimerMetric:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of the Application Timer Metric
+        readOnly: true
+      count:
+        type: integer
+        description: The number of times this metric has recorded a duration for
+        minimum: 0
+        readOnly: true
+      max:
+        type: integer
+        description: The longest recorded duration
+        minimum: 0
+        readOnly: true
+      min:
+        type: integer
+        description: The shorted recorded duration
+        minimum: 0
+        readOnly: true
+      mean:
+        type: integer
+        description: The average duration
+        minimum: 0
+        readOnly: true
+      percentiles:
+        $ref: '#/definitions/TimerMetricPercentiles'
+      tags:
+        $ref: '#/definitions/MetricTags'
+
+  MetricTags:
+    type: object
+    additionalProperties:
+      type: string
+
+  TimerMetricPercentiles:
+      type: object
+      properties:
+        p50:
+          type: integer
+          readOnly: true
+        p75:
+          type: integer
+          readOnly: true
+        p95:
+          type: integer
+          readOnly: true
+        p98:
+          type: integer
+          readOnly: true
+        p99:
+          type: integer
+          readOnly: true
+        p999:
+          type: integer
+          readOnly: true
