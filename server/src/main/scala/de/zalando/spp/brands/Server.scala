@@ -23,7 +23,7 @@ object Server extends HttpApp {
   val healthAndMetrics          = new HealthAndMetrics(metricsSvc, healthSvc)
   val applicationRoutesProvider = new PreControllerFilteredRoutes(NonEmptyList.of(healthAndMetrics))
 
-  override protected def routes: Route = applicationRoutesProvider.apiRoutes
+  override protected def routes: Route = applicationRoutesProvider.route
 
   override def waitForShutdownSignal(actorSystem: ActorSystem)(implicit executionContext: ExecutionContext): Future[Done] =
     Promise[Done]().future

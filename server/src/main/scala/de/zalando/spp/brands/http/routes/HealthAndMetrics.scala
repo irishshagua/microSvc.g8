@@ -35,7 +35,5 @@ class HealthAndMetrics(metricsSvc: MetricsService, healthSvc: HealthService)
     }
   }
 
-  val limitedReadRoutes: Route = metricsRoute ~ healthRoute
-  val readOnlyRoutes: Route    = limitedReadRoutes
-  val readWriteRoutes: Route   = readOnlyRoutes
+  val route: Route = metricsRoute ~ healthRoute
 }

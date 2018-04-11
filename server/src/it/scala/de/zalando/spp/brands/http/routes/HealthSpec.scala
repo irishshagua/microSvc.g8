@@ -19,30 +19,22 @@ class HealthSpec extends FlatSpec with Matchers with MockitoSugar with Scalatest
     reset(mockHealthSvc)
   }
 
-  "GET /health" should "be available at all auth levels" in {
-    Get("/health") ~> healthRoute.limitedReadRoutes ~> check {
-      handled shouldBe true
-    }
-
-    Get("/health") ~> healthRoute.readOnlyRoutes ~> check {
-      handled shouldBe true
-    }
-
-    Get("/health") ~> healthRoute.readWriteRoutes ~> check {
+  "GET /health" should "be exposed by the health controller" in {
+    Get("/health") ~> healthRoute.route ~> check {
       handled shouldBe true
     }
   }
 
   it should "return a 200 for a healthy endpoint" in {
     when(mockHealthSvc.healthState).thenReturn(HealthState(isHealthy = true, None))
-    Get("/health") ~> healthRoute.readWriteRoutes ~> check {
+    Get("/health") ~> healthRoute.route ~> check {
       status shouldBe StatusCodes.OK
     }
   }
 
   it should "return a 500 for a unhealthy endpoint" in {
     when(mockHealthSvc.healthState).thenReturn(HealthState(isHealthy = false, Some("gremlins")))
-    Get("/health") ~> healthRoute.readWriteRoutes ~> check {
+    Get("/health") ~> healthRoute.route ~> check {
       status shouldBe StatusCodes.InternalServerError
     }
   }

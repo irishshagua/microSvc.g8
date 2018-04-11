@@ -5,9 +5,7 @@ import kamon.Kamon
 
 trait Controller extends Directives  {
 
-  def limitedReadRoutes: Route
-  def readOnlyRoutes: Route
-  def readWriteRoutes: Route
+  def route: Route
 
   def metricName(name: String, tags: Map[String, String] = Map.empty): Directive0 = mapRequest { req ⇒
     val operationSpan = Kamon.currentSpan()
