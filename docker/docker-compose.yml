@@ -1,0 +1,7 @@
+local:
+  image: pierone.stups.zalan.do/zissou/spp-brand-service:0.1-SNAPSHOT
+  environment:
+    JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
+  ports:
+    - "0:5005"
+    - "9000:9000"
