@@ -1,4 +1,4 @@
-Service Name Here
+$service_name$
 =======
 Micro service template
 
