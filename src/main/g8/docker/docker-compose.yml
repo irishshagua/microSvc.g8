@@ -1,5 +1,5 @@
 local:
-  image: pierone.stups.zalan.do/zissou/spp-brand-service:0.1-SNAPSHOT
+  image: pierone.stups.zalan.do/zissou/$name$:0.1-SNAPSHOT
   environment:
     JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
   ports:

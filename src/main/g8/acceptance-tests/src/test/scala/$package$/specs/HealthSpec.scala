@@ -1,6 +1,6 @@
-package de.zalando.spp.brands.specs
+package $package$.specs
 
-import de.zalando.spp.brands.client.ServiceClient
+import $package$.client.ServiceClient
 
 class HealthSpec extends BaseSpec {
 
@@ -12,7 +12,7 @@ class HealthSpec extends BaseSpec {
 
     scenario("Application Health can be checked from response code") {
       Given("the service is running")
-      When(s"we send a GET request to the health endpoint ${ServiceClient.HealthEndpoint}")
+      When(s"we send a GET request to the health endpoint \${ServiceClient.HealthEndpoint}")
       val Right((resp, _)) = ServiceClient.applicationHealthCheck
 
       Then("the response code should be 200")
@@ -21,7 +21,7 @@ class HealthSpec extends BaseSpec {
 
     scenario("Application Uptime is exposed") {
       Given("the Color service is running")
-      When(s"we send a GET request to the health endpoint ${ServiceClient.HealthEndpoint}")
+      When(s"we send a GET request to the health endpoint \${ServiceClient.HealthEndpoint}")
       val Right((_, healthState)) = ServiceClient.applicationHealthCheck
 
       Then("the response shows the length of time the server has been up")

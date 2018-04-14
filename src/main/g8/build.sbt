@@ -1,6 +1,6 @@
 import Dependencies._
 
-name := "spp-service-name"
+name := "$name$"
 
 enablePlugins(DockerComposePlugin)
 dockerImageCreationTask := (publishLocal in Docker in server).value

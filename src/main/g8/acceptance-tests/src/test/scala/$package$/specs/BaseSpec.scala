@@ -1,4 +1,4 @@
-package de.zalando.spp.brands.specs
+package $package$.specs
 
 import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
 

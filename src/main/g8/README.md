@@ -1,6 +1,6 @@
-$service_name$
+$name$
 =======
-Micro service template
+Below are the details for how to test this service
 
 ### Testing
 To execute the service unit tests run the below:
