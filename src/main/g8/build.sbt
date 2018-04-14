@@ -47,7 +47,7 @@ lazy val server = (project in file("server"))
     dockerRepository := Some("pierone.stups.zalan.do/zissou"),
     mappings in Universal += file("server/src/main/resources/schema/swagger.yaml") -> "zalando-apis/swagger.yaml"
   )
-  .settings(name := "spp-service-name",
+  .settings(name := "$name$",
             description := "Standalone REST service",
             libraryDependencies ++= serverDependencies)
   .enablePlugins(JavaAppPackaging)
